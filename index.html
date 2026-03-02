@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priskalkylator för Konstnärer</title>
+    <link rel="stylesheet" href="kalkylator.css">
+</head>
+<body>
+    <div class="kalkylator-container">
+        <header>
+            <h1>💰 Priskalkylator för Konstverk</h1>
+            <p class="subtitle">Räkna ut ett rättvist pris för ditt konstverk</p>
+        </header>
+
+        <div class="input-group">
+            <label for="materialkostnad">Materialkostnad (kr):</label>
+            <input type="number" id="materialkostnad" placeholder="t.ex. 500" min="0" step="100" value="0">
+            <small>Färg, duk, penslar, ram, etc.</small>
+        </div>
+
+        <div class="input-group">
+            <label for="timmar">Nedlagda timmar:</label>
+            <input type="number" id="timmar" placeholder="t.ex. 20" min="0" step="1" value="0">
+            <small>Hur många timmar har du arbetat?</small>
+        </div>
+
+        <div class="input-group">
+            <label for="timlon">Önskad timlön (kr/tim):</label>
+            <input type="number" id="timlon" placeholder="t.ex. 250" min="0" step="50" value="250">
+            <small>Vad vill du tjäna per timme?</small>
+        </div>
+
+        <div class="input-group">
+            <label for="provision">Galleri/provision (%):</label>
+            <input type="number" id="provision" placeholder="t.ex. 40" min="0" max="100" step="5" value="0">
+            <small>Om galleriet tar en andel (lämna 0 om du säljer själv)</small>
+        </div>
+
+        <div class="input-group">
+            <label for="omkostnader">Omkostnader (kr):</label>
+            <input type="number" id="omkostnader" placeholder="t.ex. 200" min="0" step="100" value="0">
+            <small>Frakt, marknadsföring, ateljéhyra (valfritt)</small>
+        </div>
+
+        <div class="input-group">
+            <label for="vinstmarginal">Önskad vinstmarginal (%):</label>
+            <input type="number" id="vinstmarginal" placeholder="t.ex. 20" min="0" max="200" step="5" value="0">
+            <small>Extra påslag utöver timlön (valfritt)</small>
+        </div>
+
+        <button onclick="beraknaPris()" id="beraknaBtn">Beräkna pris</button>
+        <button onclick="nollstall()" id="nollstallBtn">Nollställ</button>
+
+        <div class="resultat" id="resultat">
+            <p>Fyll i värden ovan för att se prisförslag</p>
+        </div>
+
+        <div class="forklaring">
+            <h3>📋 Så här fungerar det:</h3>
+            <p><strong>Minimipris = Material + (Timmar × Timlön) + Omkostnader</strong></p>
+            <p>Pris med galleriprovision = Minimipris / (1 - Provision/100)</p>
+            <p>Pris med vinstmarginal = Minimipris × (1 + Vinstmarginal/100)</p>
+            <p class="tips">💡 Tips: Räkna med en timlön på 200-400 kr beroende på din erfarenhet.</p>
+        </div>
+    </div>
+
+    <script src="kalkylator.js"></script>
+</body>
+</html>
