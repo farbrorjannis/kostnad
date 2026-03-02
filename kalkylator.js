@@ -2,7 +2,11 @@ function beraknaPris() {
     // Hämta värden från input-fälten
     const material = parseFloat(document.getElementById('materialkostnad').value) || 0;
     const timmar = parseFloat(document.getElementById('timmar').value) || 0;
-    const timlon = parseFloat(document.getElementById('timlon').value) || 0;
+    
+    // ÄNDRING: Hantera tomt timlönsfält
+    const timlonInput = document.getElementById('timlon').value;
+    const timlon = timlonInput === '' ? 0 : parseFloat(timlonInput) || 0;
+    
     const provision = parseFloat(document.getElementById('provision').value) || 0;
     const omkostnader = parseFloat(document.getElementById('omkostnader').value) || 0;
     const vinstmarginal = parseFloat(document.getElementById('vinstmarginal').value) || 0;
@@ -44,13 +48,20 @@ function beraknaPris() {
         resultatHtml += `<p>🖼️ <strong>Ditt rekommenderade pris:</strong> ${formatValuta(slutligtPris)}</p>`;
     }
     
-    // Visa detaljer
+    // Visa detaljer (visa bara arbetskostnad om timlön är ifylld)
     resultatHtml += `
         <hr style="margin: 1rem 0; border: 1px dashed #e1e8ed;">
         <p style="font-size: 1rem;"><strong>Detaljer:</strong></p>
         <ul style="font-size: 1rem; list-style: none; padding-left: 0;">
             <li>🎨 Materialkostnad: ${formatValuta(material)}</li>
-            <li>⏱️ Arbetskostnad (${timmar} h × ${formatValuta(timlon)}/h): ${formatValuta(arbetskostnad)}</li>
+    `;
+    
+    // ÄNDRING: Visa bara arbetskostnad om timlön är ifylld
+    if (timlon > 0) {
+        resultatHtml += `<li>⏱️ Arbetskostnad (${timmar} h × ${formatValuta(timlon)}/h): ${formatValuta(arbetskostnad)}</li>`;
+    }
+    
+    resultatHtml += `
             ${omkostnader > 0 ? `<li>📦 Omkostnader: ${formatValuta(omkostnader)}</li>` : ''}
             ${vinstmarginal > 0 ? `<li>📈 Vinstmarginal (${vinstmarginal}%): +${formatValuta((material + arbetskostnad + omkostnader) * vinstmarginal/100)}</li>` : ''}
         </ul>
@@ -62,7 +73,7 @@ function beraknaPris() {
 function nollstall() {
     document.getElementById('materialkostnad').value = 0;
     document.getElementById('timmar').value = 0;
-    document.getElementById('timlon').value = 250;
+    document.getElementById('timlon').value = '';  // ÄNDRING: Tomt istället för 250
     document.getElementById('provision').value = 0;
     document.getElementById('omkostnader').value = 0;
     document.getElementById('vinstmarginal').value = 0;
